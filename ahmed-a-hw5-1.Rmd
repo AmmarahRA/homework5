@@ -71,15 +71,50 @@ knitr::kable(tab_5,
 ```{r regtab1, include=T, eval=T, echo=F}
 modelsummary(list("DD" = m.dd),
              title = "Effect of Medicaid Expansion on Uninsurance Rate",
-             gof_map = list(list("raw" = "nobs", "clean"="N", "fmt" = 0),
-                            list("raw"="r.squared", "clean"="R2", "fmt" =2)),
+             gof_map=NA, coef_omit='Intercept',
              output = "kableExtra") %>%
   kable_styling(latex_options = c("hold_position"))
 ```
 
+## Question 3
 
+```{r regtab2, include=T, eval=T, echo=F}
+modelsummary(list("DD" = mod.twfe),
+             title = "Effect of Medicaid Expansion on Uninsurance Rate",
+             gof_map=NA, coef_omit='Intercept',
+             output = "kableExtra") %>%
+  kable_styling(latex_options = c("hold_position"))
+```
 
+## Question 4
 
+```{r regtab3, include=T, eval=T, echo=F}
+modelsummary(list("DD" = mod.twfe2),
+             title = "Effect of Medicaid Expansion on Uninsurance Rate",
+             gof_map=NA, coef_omit='Intercept',
+             output = "kableExtra") %>%
+  kable_styling(latex_options = c("hold_position"))
+```
+
+\newpage 
+
+## Question 5
+
+```{r fig9, include=T, eval=T, echo=F, fig.cap="Effect of Medicaid Expansion"}
+iplot(mod.twfe, 
+      xlab = 'Time to treatment',
+      main = 'Event study')
+```
+
+\newpage 
+
+## Question 6
+
+```{r fig10, include=T, eval=T, echo=F, fig.cap="Effect of Medicaid Expansion"}
+iplot(mod.twfe2, 
+      xlab = 'Time to treatment',
+      main = 'Event study')
+```
 
 
 

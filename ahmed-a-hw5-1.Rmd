@@ -86,6 +86,7 @@ modelsummary(list("DD" = mod.twfe),
   kable_styling(latex_options = c("hold_position"))
 ```
 
+\newpage 
 ## Question 4
 
 ```{r regtab3, include=T, eval=T, echo=F}
@@ -97,7 +98,6 @@ modelsummary(list("DD" = mod.twfe2),
 ```
 
 \newpage 
-
 ## Question 5
 
 ```{r fig9, include=T, eval=T, echo=F, fig.cap="Effect of Medicaid Expansion"}
@@ -107,7 +107,6 @@ iplot(mod.twfe,
 ```
 
 \newpage 
-
 ## Question 6
 
 ```{r fig10, include=T, eval=T, echo=F, fig.cap="Effect of Medicaid Expansion"}

@@ -37,7 +37,7 @@ mcaid_fig
 plot_data <- final.data %>% filter(expand_year == 2014 | is.na(expand_year), !is.na(expand_ever)) %>%
   group_by(expand_ever, year) %>% summarise(mean=mean(perc_unins)) 
 
-unins.plot <- ggplot(data = plot_data, aes(x = year, y = mean, 
+unins_fig <- ggplot(data = plot_data, aes(x = year, y = mean, 
                                            group = expand_ever,
                                            linetype = expand_ever)) + 
   geom_line() + geom_point() + theme_bw() +
@@ -49,7 +49,7 @@ unins.plot <- ggplot(data = plot_data, aes(x = year, y = mean,
   guides(linetype="none") +
   labs(x = "Year", y = "Fraction Uninsured", title = "Share of Uninsured over Time") +
   theme(plot.title = element_text(hjust = 0.5)) 
-unins.plot
+unins_fig
 
 #5
 
@@ -66,8 +66,8 @@ tab_5.2 <- data_5 %>% filter(expand_ever == 'FALSE') %>%
   group_by(year) %>% summarise(avg_unins = mean(perc_unins))
 
 tab_5 <- data.frame(avg_unins = c("Treated", "Control"),
-                    after = c(tab_5.1$avg_unins[2], tab_5.2$avg_unins[2]),
-                    before = c(tab_5.1$avg_unins[1], tab_5.2$avg_unins[1]))
+                    after = c(round(tab_5.1$avg_unins[2], 2), round(tab_5.2$avg_unins[2], 2)),
+                    before = c(round(tab_5.1$avg_unins[1], 2), round(tab_5.2$avg_unins[1], 2)))
 
 #6
 
@@ -90,5 +90,5 @@ mod.twfe <- feols(perc_unins~i(year, expand_ever, ref=2013) | State + year,
                   data=reg.dat)
 
 
-
+save.image("homework5.Rdata")
 

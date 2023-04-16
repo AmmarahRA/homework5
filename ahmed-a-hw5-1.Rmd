@@ -1,0 +1,81 @@
+---
+title: "Homework 5 - Research in Health Economics"
+author: "Ammarah Ahmed"
+date: ""
+header-includes:
+  - \usepackage{booktabs}
+output: 
+  bookdown::pdf_document2:
+    fig_caption: yes
+    toc: false
+---
+```{r setup, include=FALSE}
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table, gdata, modelsummary, fixest, kableExtra)
+```
+
+```{r, warning = FALSE, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning = FALSE)
+```
+
+```{r, include=FALSE}
+load("homework5.Rdata")
+```
+
+# Summarise the Data
+
+## Question 1
+
+```{r dirfig, include=T, eval=T, echo=F, fig.cap="Share of Direct Purchase Insurance Over Time"}
+dir_fig
+```
+
+## Question 2 
+
+The graph in \@ref(fig:dirfig) shows the share of direct purchase insurance amongst the total insured population over time. Direct purchase insurance share peaked in 2015 before decreasing significantly. 
+
+## Question 3
+
+```{r mcaidfig, include=T, eval=T, echo=F, fig.cap="Share of Medicaid Insurance Over Time"}
+mcaid_fig
+```
+
+## Question 4
+```{r uninsfig, include=T, eval=T, echo=F, fig.cap="Share of Uninsured Over Time"}
+unins_fig
+```
+
+# Estimate ATEs
+
+## Question 1
+
+```{r, include=FALSE}
+tab_5
+```
+
+```{r tab5, include=T, eval=T, echo=F}
+knitr::kable(tab_5, 
+             col.names=c(" ", "After", "Before"),
+             format.args = list(big.mark=","), 
+             caption = "Average Share of Uninsured Individuals (%)",
+             booktabs = TRUE) %>%
+  kable_styling(latex_options = c("hold_position"))
+```
+
+## Question 2
+
+```{r regtab1, include=T, eval=T, echo=F}
+modelsummary(list("DD" = m.dd),
+             title = "Effect of Medicaid Expansion on Uninsurance Rate",
+             gof_map = list(list("raw" = "nobs", "clean"="N", "fmt" = 0),
+                            list("raw"="r.squared", "clean"="R2", "fmt" =2)),
+             output = "kableExtra") %>%
+  kable_styling(latex_options = c("hold_position"))
+```
+
+
+
+
+
+
+
+

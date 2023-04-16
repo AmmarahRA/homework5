@@ -33,17 +33,22 @@ dir_fig
 
 The graph in \@ref(fig:dirfig) shows the share of direct purchase insurance amongst the total insured population over time. Direct purchase insurance share peaked in 2015 before decreasing significantly. 
 
+\newpage 
+
 ## Question 3
 
 ```{r mcaidfig, include=T, eval=T, echo=F, fig.cap="Share of Medicaid Insurance Over Time"}
 mcaid_fig
 ```
 
+\newpage 
+
 ## Question 4
 ```{r uninsfig, include=T, eval=T, echo=F, fig.cap="Share of Uninsured Over Time"}
 unins_fig
 ```
 
+\newpage
 # Estimate ATEs
 
 ## Question 1
@@ -56,7 +61,7 @@ tab_5
 knitr::kable(tab_5, 
              col.names=c(" ", "After", "Before"),
              format.args = list(big.mark=","), 
-             caption = "Average Share of Uninsured Individuals (%)",
+             caption = "Average Share of Uninsured Individuals",
              booktabs = TRUE) %>%
   kable_styling(latex_options = c("hold_position"))
 ```

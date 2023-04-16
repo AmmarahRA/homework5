@@ -1,4 +1,4 @@
-pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table, gdata, modelsummary)
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table, gdata, modelsummary, fixest)
 
 final.data <- read_tsv('data/output/acs_medicaid.txt')
 
@@ -71,21 +71,23 @@ tab_5 <- data.frame(avg_unins = c("Treated", "Control"),
 
 #6
 
-reg.data <- final.data %>% filter(expand_ever == 'TRUE' & (year == 2012 | year == 2015)) %>%
-  mutate(post = (year>=2014),
+reg.data <- final.data %>% filter(expand_year==2014 | is.na(expand_year), !is.na(expand_ever)) %>%
+  mutate(post = (year>=2014), 
          treat=post*expand_ever)
 
-m.dd.t <- lm(perc_unins ~ post + expand_ever + treat, data=reg.data)
-summary(m.dd.t)
+m.dd <- lm(perc_unins ~ post + expand_ever + treat, data=reg.data)
+summary(m.dd)
 
-reg.data2 <- final.data %>% filter(expand_ever == 'FALSE' & (year == 2012 | year == 2015)) %>%
-  mutate(post = (year>=2014),
+#7
+
+reg.dat <- mcaid.data %>% 
+  filter(expand_year==2014 | is.na(expand_year), !is.na(expand_ever)) %>%
+  mutate(perc_unins=uninsured/adult_pop,
+         post = (year>=2014), 
          treat=post*expand_ever)
-
-m.dd.f <- lm(perc_unins ~ post + expand_ever + treat, data=reg.data2)
-summary(m.dd.f)
-
-
+mod.twfe <- feols(perc_unins~i(year, expand_ever, ref=2013) | State + year,
+                  cluster=~State,
+                  data=reg.dat)
 
 
 

@@ -53,6 +53,24 @@ unins.plot
 
 #5
 
+data_5 <- final.data %>% filter((year == 2012 | year == 2015)) %>%
+  mutate(post = (year >= 2014),
+         pre = (year <= 2013),
+         treat = post*expand_ever) %>%
+  group_by(expand_ever)
+
+tab_5.1 <- data_5 %>% filter(expand_ever == 'TRUE') %>% 
+  group_by(year) %>% summarise(avg_unins = mean(perc_unins)) 
+
+tab_5.2 <- data_5 %>% filter(expand_ever == 'FALSE') %>% 
+  group_by(year) %>% summarise(avg_unins = mean(perc_unins))
+
+tab_5 <- data.frame(avg_unins = c("Treated", "Control"),
+                    after = c(tab_5.1$avg_unins[2], tab_5.2$avg_unins[2]),
+                    before = c(tab_5.1$avg_unins[1], tab_5.2$avg_unins[1]))
+
+#6
+
 reg.data <- final.data %>% filter(expand_ever == 'TRUE' & (year == 2012 | year == 2015)) %>%
   mutate(post = (year>=2014),
          treat=post*expand_ever)
@@ -66,3 +84,9 @@ reg.data2 <- final.data %>% filter(expand_ever == 'FALSE' & (year == 2012 | year
 
 m.dd.f <- lm(perc_unins ~ post + expand_ever + treat, data=reg.data2)
 summary(m.dd.f)
+
+
+
+
+
+

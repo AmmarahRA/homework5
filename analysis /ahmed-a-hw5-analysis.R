@@ -4,9 +4,9 @@ final.data <- read_tsv('data/output/acs_medicaid.txt')
 
 final.data <- final.data %>% mutate(insured = ins_employer + ins_direct +
                                       ins_medicaid + ins_medicare)
-final.data <- final.data %>% mutate(perc_dir = (ins_direct/insured)*100,
-                                    perc_empl = (ins_employer/insured)*100,
-                                    perc_mcaid = (ins_medicaid/insured)*100,
+final.data <- final.data %>% mutate(perc_dir = (ins_direct/adult_pop)*100,
+                                    perc_empl = (ins_employer/adult_pop)*100,
+                                    perc_mcaid = (ins_medicaid/adult_pop)*100,
                                     perc_ins = (insured/adult_pop)*100,
                                     perc_unins = (uninsured/adult_pop)*100)
 
@@ -80,24 +80,19 @@ summary(m.dd)
 
 #7
 
-reg.data2 <- reg.data %>%
-  mutate(time_to_treat = ifelse(expand_ever==FALSE, 0, year-expand_year),
-         time_to_treat = ifelse(time_to_treat < -3, -3, time_to_treat))
-
-mod.twfe <- feols(perc_unins~i(time_to_treat, expand_ever, ref=-1) | State + year,
+mod.twfe <- feols(perc_unins~i(year, expand_ever, ref=2013) | State + year,
                   cluster=~State,
-                  data=reg.data2)
+                  data=reg.data)
 summary(mod.twfe)
 
 #8
 
 reg.data3 <- final.data %>% 
   filter(!is.na(expand_ever)) %>%
-  mutate(perc_unins=uninsured/adult_pop,
-         post = (year>=2014), 
+  mutate(post = (year>=2014), 
          treat=post*expand_ever,
-         time_to_treat = ifelse(expand_ever==FALSE, 0, year-expand_year),
-         time_to_treat = ifelse(time_to_treat < -3, -3, time_to_treat))
+         time_to_treat = ifelse(expand_ever==TRUE, year-expand_year, -1),
+         time_to_treat = ifelse(time_to_treat <= -4, -4, time_to_treat))
 
 mod.twfe2 <- feols(perc_unins~i(time_to_treat, expand_ever, ref=-1) | State + year,
                   cluster=~State,

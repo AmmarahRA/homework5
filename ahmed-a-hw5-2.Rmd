@@ -31,7 +31,7 @@ dir_fig
 
 ## Question 2 
 
-The graph in \@ref(fig:dirfig) shows the share of direct purchase insurance amongst the total insured population over time. Direct purchase insurance share peaked in 2015 before decreasing significantly. 
+The graph in \@ref(fig:dirfig) shows the share of direct purchase insurance amongst the total insured population over time. Direct purchase insurance share peaked in 2015 before decreasing significantly. Some policy that could cause this decrease in share of direct purchase insurance could be Medicaid expansion which made people who previously bought direct purchase insurance eligible for Medicaid insurance. 
 
 \newpage 
 
@@ -96,6 +96,8 @@ modelsummary(list("DD" = mod.twfe2),
              output = "kableExtra") %>%
   kable_styling(latex_options = c("hold_position"))
 ```
+
+The results if all the states are included is different from if only states that expanded in 2014 or never expanded are included. This is because many states expanded Medicaid after 2014 and the first regression does not include those results.
 
 \newpage 
 ## Question 5

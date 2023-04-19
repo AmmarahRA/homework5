@@ -72,6 +72,8 @@ knitr::kable(tab_5,
 modelsummary(list("DD" = m.dd),
              title = "Effect of Medicaid Expansion on Uninsurance Rate",
              gof_map=NA, coef_omit='Intercept',
+             coef_rename = c("postTRUE" = "Post 2014", "expand_everTRUE" = "Expand", 
+                             "treat" = "Post x Expand"),
              output = "kableExtra") %>%
   kable_styling(latex_options = c("hold_position"))
 ```
@@ -104,7 +106,8 @@ The results if all the states are included is different from if only states that
 
 ```{r fig9, include=T, eval=T, echo=F, fig.cap="Event Study for 2014 Treatment Group"}
 iplot(mod.twfe, 
-      xlab = 'Time to treatment')
+      xlab = 'Time to treatment',
+      main = ' ')
 ```
 
 \newpage 
@@ -112,7 +115,8 @@ iplot(mod.twfe,
 
 ```{r fig10, include=T, eval=T, echo=F, fig.cap="Event Study for All Expansion States"}
 iplot(mod.twfe2, 
-      xlab = 'Time to treatment')
+      xlab = 'Time to treatment',
+      main = ' ')
 ```
 
 

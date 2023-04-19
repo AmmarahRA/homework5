@@ -17,7 +17,7 @@ dir_fig<- final.data %>% group_by(year) %>% summarize(mean=mean(perc_dir)) %>%
   ggplot(aes(x=year,y=mean)) + 
   geom_line() + geom_point() + 
   theme_bw() +
-  labs(x="Year", y="Fraction with Direct Purchase", title="Share of Direct Purchase Insurance over Time") +
+  labs(x="Year", y="Fraction with Direct Purchase") +
   geom_vline(xintercept=2013.5, color="red") +
   theme(plot.title = element_text(hjust = 0.5)) 
 dir_fig
@@ -28,7 +28,7 @@ mcaid_fig <- final.data %>% group_by(year) %>% summarize(mean=mean(perc_mcaid)) 
   ggplot(aes(x=year,y=mean)) + 
   geom_line() + geom_point() + 
   theme_bw() +
-  labs(x="Year", y="Fraction with Medicaid", title="Share of Medicaid Insurance over Time") +
+  labs(x="Year", y="Fraction with Medicaid") +
   geom_vline(xintercept=2013.5, color="red") +
   theme(plot.title = element_text(hjust = 0.5)) 
 mcaid_fig
@@ -48,7 +48,7 @@ unins_fig <- ggplot(data = plot_data, aes(x = year, y = mean,
                 x = year + 1,
                 y = mean)) +
   guides(linetype="none") +
-  labs(x = "Year", y = "Fraction Uninsured", title = "Share of Uninsured over Time") +
+  labs(x = "Year", y = "Fraction Uninsured") +
   theme(plot.title = element_text(hjust = 0.5)) 
 unins_fig
 

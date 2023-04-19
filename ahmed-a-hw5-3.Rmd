@@ -1,0 +1,120 @@
+---
+title: "Homework 5 - Research in Health Economics"
+author: "Ammarah Ahmed"
+date: ""
+header-includes:
+  - \usepackage{booktabs}
+output: 
+  bookdown::pdf_document2:
+    fig_caption: yes
+    toc: false
+---
+```{r setup, include=FALSE}
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table, gdata, modelsummary, fixest, kableExtra)
+```
+
+```{r, warning = FALSE, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning = FALSE)
+```
+
+```{r, include=FALSE}
+load("homework5.Rdata")
+```
+
+# Summarise the Data
+
+## Question 1
+
+```{r dirfig, include=T, eval=T, echo=F, fig.cap="Share of Direct Purchase Insurance Over Time"}
+dir_fig
+```
+
+## Question 2 
+
+The graph in \@ref(fig:dirfig) shows the share of direct purchase insurance amongst the total insured population over time. Direct purchase insurance share peaked in 2015 before decreasing significantly. Some policy that could cause this decrease in share of direct purchase insurance could be Medicaid expansion which made people who previously bought direct purchase insurance eligible for Medicaid insurance. 
+
+\newpage 
+
+## Question 3
+
+```{r mcaidfig, include=T, eval=T, echo=F, fig.cap="Share of Medicaid Insurance Over Time"}
+mcaid_fig
+```
+
+\newpage 
+
+## Question 4
+```{r uninsfig, include=T, eval=T, echo=F, fig.cap="Share of Uninsured Over Time"}
+unins_fig
+```
+
+\newpage
+# Estimate ATEs
+
+## Question 1
+
+```{r, include=FALSE}
+tab_5
+```
+
+```{r tab5, include=T, eval=T, echo=F}
+knitr::kable(tab_5, 
+             col.names=c(" ", "Before", "After"),
+             format.args = list(big.mark=","), 
+             caption = "Average Share of Uninsured Individuals",
+             booktabs = TRUE) %>%
+  kable_styling(latex_options = c("hold_position"))
+```
+
+## Question 2
+
+```{r regtab1, include=T, eval=T, echo=F}
+modelsummary(list("DD" = m.dd),
+             title = "Effect of Medicaid Expansion on Uninsurance Rate",
+             gof_map=NA, coef_omit='Intercept',
+             output = "kableExtra") %>%
+  kable_styling(latex_options = c("hold_position"))
+```
+
+## Question 3
+
+```{r regtab2, include=T, eval=T, echo=F}
+modelsummary(list("DD" = mod.twfe),
+             title = "Effect of Medicaid Expansion on Uninsurance Rate",
+             gof_map=NA, coef_omit='Intercept',
+             output = "kableExtra") %>%
+  kable_styling(latex_options = c("hold_position"))
+```
+
+\newpage 
+## Question 4
+
+```{r regtab3, include=T, eval=T, echo=F}
+modelsummary(list("DD" = mod.twfe2),
+             title = "Effect of Medicaid Expansion on Uninsurance Rate",
+             gof_map=NA, coef_omit='Intercept',
+             output = "kableExtra") %>%
+  kable_styling(latex_options = c("hold_position"))
+```
+
+The results if all the states are included is different from if only states that expanded in 2014 or never expanded are included. This is because many states expanded Medicaid after 2014 and the first regression does not include those results.
+
+\newpage 
+## Question 5
+
+```{r fig9, include=T, eval=T, echo=F, fig.cap="Event Study for 2014 Treatment Group"}
+iplot(mod.twfe, 
+      xlab = 'Time to treatment')
+```
+
+\newpage 
+## Question 6
+
+```{r fig10, include=T, eval=T, echo=F, fig.cap="Event Study for All Expansion States"}
+iplot(mod.twfe2, 
+      xlab = 'Time to treatment')
+```
+
+
+
+

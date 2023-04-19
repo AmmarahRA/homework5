@@ -105,14 +105,14 @@ summary(mod.twfe2)
 
 fig_9 <- iplot(mod.twfe, 
       xlab = 'Time to treatment',
-      main = 'Event study')
+      main = '')
 fig_9
 
 #10
 
 fig_10 <- iplot(mod.twfe2, 
                xlab = 'Time to treatment',
-               main = 'Event study')
+               main = '')
 fig_10
 
 save.image("homework5.Rdata")

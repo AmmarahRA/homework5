@@ -2,6 +2,7 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table
 
 final.data <- read_tsv('data/output/acs_medicaid.txt')
 
+final.data <- final.data %>% filter(State != "Puerto Rico", State != "District of Columbia")
 final.data <- final.data %>% mutate(insured = ins_employer + ins_direct +
                                       ins_medicaid + ins_medicare)
 final.data <- final.data %>% mutate(perc_dir = (ins_direct/adult_pop)*100,
@@ -53,7 +54,8 @@ unins_fig
 
 #5
 
-data_5 <- final.data %>% filter((year == 2012 | year == 2015)) %>%
+data_5 <- final.data %>% filter((year == 2012 | year == 2015) & !is.na(expand_ever)) %>%
+  filter(expand_year == 2014 | is.na(expand_year)) %>%
   mutate(post = (year >= 2014),
          pre = (year <= 2013),
          treat = post*expand_ever) %>%
@@ -65,9 +67,9 @@ tab_5.1 <- data_5 %>% filter(expand_ever == 'TRUE') %>%
 tab_5.2 <- data_5 %>% filter(expand_ever == 'FALSE') %>% 
   group_by(year) %>% summarise(avg_unins = mean(perc_unins))
 
-tab_5 <- data.frame(avg_unins = c("Treated", "Control"),
-                    after = c(round(tab_5.1$avg_unins[2], 2), round(tab_5.2$avg_unins[2], 2)),
-                    before = c(round(tab_5.1$avg_unins[1], 2), round(tab_5.2$avg_unins[1], 2)))
+tab_5 <- data.frame(avg_unins = c("Expansion", "Non-Expansion"),
+                    before = c(round(tab_5.1$avg_unins[1], 2), round(tab_5.2$avg_unins[1], 2)),
+                    after = c(round(tab_5.1$avg_unins[2], 2), round(tab_5.2$avg_unins[2], 2)))
 
 #6
 

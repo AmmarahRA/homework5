@@ -87,6 +87,11 @@ mod.twfe <- feols(perc_unins~i(year, expand_ever, ref=2013) | State + year,
                   data=reg.data)
 summary(mod.twfe)
 
+ate_3 <-  feols(perc_unins~ treat | State + year,
+                 cluster=~State,
+                 data=reg.data)
+summary(ate_3)
+
 #8
 
 reg.data3 <- final.data %>% 
@@ -100,6 +105,10 @@ mod.twfe2 <- feols(perc_unins~i(time_to_treat, expand_ever, ref=-1) | State + ye
                   cluster=~State,
                   data=reg.data3)
 summary(mod.twfe2)
+
+ate_4 <- feols(perc_unins ~ treat | State + year, data = reg.data3)
+summary(ate_4)
+
 
 #9
 

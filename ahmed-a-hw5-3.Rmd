@@ -82,7 +82,7 @@ modelsummary(list("DD" = m.dd),
 
 ```{r regtab2, include=T, eval=T, echo=F}
 modelsummary(list("DD" = ate_3),
-             title = "Effect of Medicaid Expansion on Uninsurance Rate",
+             title = "Effect of Medicaid Expansion on Uninsurance Rate (Expanded in 2014)",
              gof_map=NA, coef_rename = c("treat" = "Post x Expand"),
              output = "kableExtra") %>%
   kable_styling(latex_options = c("hold_position"))
@@ -93,7 +93,7 @@ modelsummary(list("DD" = ate_3),
 
 ```{r regtab3, include=T, eval=T, echo=F}
 modelsummary(list("DD" = ate_4),
-             title = "Effect of Medicaid Expansion on Uninsurance Rate",
+             title = "Effect of Medicaid Expansion on Uninsurance Rate (All States)",
              gof_map=NA, coef_rename = c("treat" = "Post x Expand"),
              output = "kableExtra") %>%
   kable_styling(latex_options = c("hold_position"))

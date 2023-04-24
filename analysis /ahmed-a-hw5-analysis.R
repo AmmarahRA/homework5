@@ -78,7 +78,7 @@ reg.data <- final.data %>% filter(expand_year==2014 | is.na(expand_year), !is.na
          treat=post*expand_ever)
 
 m.dd <- lm(perc_unins ~ post + expand_ever + treat, data=reg.data)
-summary(m.dd)
+modelsummary(m.dd)
 
 #7
 
@@ -90,7 +90,7 @@ summary(mod.twfe)
 ate_3 <-  feols(perc_unins~ treat | State + year,
                  cluster=~State,
                  data=reg.data)
-summary(ate_3)
+modelsummary(ate_3)
 
 #8
 
@@ -106,8 +106,16 @@ mod.twfe2 <- feols(perc_unins~i(time_to_treat, expand_ever, ref=-1) | State + ye
                   data=reg.data3)
 summary(mod.twfe2)
 
-ate_4 <- feols(perc_unins ~ treat | State + year, data = reg.data3)
-summary(ate_4)
+reg.data3.2 <- final.data %>%mutate(treat = case_when(
+  year >= expand_year & !is.na(expand_year) ~ 1, 
+  is.na(expand_year) ~ 0,
+  year < expand_year & !is.na(expand_year) ~ 0)
+)
+
+ate_4 <- feols(perc_unins ~ treat | State + year, data = reg.data3.2)
+
+modelsummary(ate_4)
+
 
 
 #9

@@ -71,9 +71,9 @@ knitr::kable(tab_5,
 ```{r regtab1, include=T, eval=T, echo=F}
 modelsummary(list("DD" = m.dd),
              title = "Effect of Medicaid Expansion on Uninsurance Rate",
-             gof_map=NA, coef_omit='Intercept',
+             gof_map=NA,
              coef_rename = c("postTRUE" = "Post 2014", "expand_everTRUE" = "Expand", 
-                             "treat" = "Post x Expand"),
+                             "treat" = "Post x Expand", "(Intercept)" = "Intercept"),
              output = "kableExtra") %>%
   kable_styling(latex_options = c("hold_position"))
 ```
@@ -81,9 +81,9 @@ modelsummary(list("DD" = m.dd),
 ## Question 3
 
 ```{r regtab2, include=T, eval=T, echo=F}
-modelsummary(list("DD" = mod.twfe),
+modelsummary(list("DD" = ate_3),
              title = "Effect of Medicaid Expansion on Uninsurance Rate",
-             gof_map=NA, coef_omit='Intercept',
+             gof_map=NA, coef_rename = c("treat" = "Post x Expand"),
              output = "kableExtra") %>%
   kable_styling(latex_options = c("hold_position"))
 ```
@@ -92,9 +92,9 @@ modelsummary(list("DD" = mod.twfe),
 ## Question 4
 
 ```{r regtab3, include=T, eval=T, echo=F}
-modelsummary(list("DD" = mod.twfe2),
+modelsummary(list("DD" = ate_4),
              title = "Effect of Medicaid Expansion on Uninsurance Rate",
-             gof_map=NA, coef_omit='Intercept',
+             gof_map=NA, coef_rename = c("treat" = "Post x Expand"),
              output = "kableExtra") %>%
   kable_styling(latex_options = c("hold_position"))
 ```

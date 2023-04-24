@@ -109,8 +109,7 @@ summary(mod.twfe2)
 reg.data3.2 <- final.data %>%mutate(treat = case_when(
   year >= expand_year & !is.na(expand_year) ~ 1, 
   is.na(expand_year) ~ 0,
-  year < expand_year & !is.na(expand_year) ~ 0)
-)
+  year < expand_year & !is.na(expand_year) ~ 0))
 
 ate_4 <- feols(perc_unins ~ treat | State + year, data = reg.data3.2)
 

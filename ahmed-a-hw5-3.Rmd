@@ -121,4 +121,3 @@ iplot(mod.twfe2,
 
 
 
-

@@ -116,8 +116,6 @@ ate_4 <- feols(perc_unins ~ treat | State + year, data = reg.data3.2)
 
 modelsummary(ate_4)
 
-
-
 #9
 
 fig_9 <- iplot(mod.twfe, 
